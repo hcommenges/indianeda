@@ -25,15 +25,11 @@ shinyUI(fluidPage(
     
     tabPanel("Données",
              fluidRow(
-               column(9, wellPanel(
-                 selectInput("choosestate", label = "Choisir un état", choices = "", multiple = FALSE),
-                 textInput("filterrow", label = 'Filtrer les observations (test conditionnel)', width = "50%"),
-                 fluidRow(column(3,
-                                 actionButton("addfilter", label = "Appliquer le filtre")),
-                          column(3,
-                                 actionButton("delfilter", label = "Supprimer le filtre")))
+               column(12, wellPanel(
+                 selectInput("choosestate", label = "Choisir un état", choices = "", multiple = FALSE, width = "40%"),
+                 checkboxInput("delna", label = "Supprimer les observations incomplètes", value = FALSE)
                )),
-               column(9,
+               column(12,
                       div(dataTableOutput("contentstable"), style = "overflow-x: auto;")
                )
              )
@@ -45,18 +41,13 @@ shinyUI(fluidPage(
              fluidRow(
                column(3, wellPanel(
                  tags$h4("Choisir la variable à explorer"),
-                 selectInput(inputId = "uniquanti", 
+                 selectInput(inputId = "univar", 
                              label = "Choisir une variable quanti", 
                              choices = "", 
                              selected = "", 
                              multiple = FALSE, 
                              selectize = TRUE),
-                 selectInput(inputId = "uniquali", 
-                             label = "Choisir une variable quali", 
-                             choices = "", 
-                             selected = "", 
-                             multiple = FALSE, 
-                             selectize = TRUE),
+                 checkboxInput("unitype", "Traiter comme une variable discrète", value = FALSE),
                  checkboxInput("uniset", "Personnaliser l'histogramme"),
                  conditionalPanel(condition = "input.uniset == true",
                                   sliderInput(inputId = "nbins", 
